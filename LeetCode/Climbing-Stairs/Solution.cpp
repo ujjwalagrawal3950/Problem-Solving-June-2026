@@ -1,14 +1,11 @@
 1class Solution {
-2    int fibonaaci(int n, vector<int>&dp){
-3        if(n == 0 || n == 1){return 1;}
-4        if(n < 0){return 0;}
-5        if(dp[n] != -1){return dp[n];}
-6
-7        return dp[n] = fibonaaci(n-1, dp) + fibonaaci(n-2, dp);
-8    }
-9public:
-10    int climbStairs(int n) {
-11        vector<int>dp(n+1, -1);
-12        return fibonaaci(n, dp);
-13    }
-14};
+2public:
+3    int climbStairs(int n) {
+4        vector<int>dp(n+1, 0);
+5        dp[1] = 1, dp[0] = 1;
+6        for(int i = 2; i<=n; i++){  // bottom to up
+7            dp[i] = dp[i-1] + dp[i-2];
+8        }
+9        return dp[n];
+10    }
+11};
