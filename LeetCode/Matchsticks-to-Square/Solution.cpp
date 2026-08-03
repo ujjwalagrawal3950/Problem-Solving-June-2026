@@ -7,7 +7,7 @@
 7
 8        for(int i = 0; i<4; i++){ // Each sticks have to option to add in any of four side
 9            if(side[i] + matchsticks[idx] > target){continue;} // ek side badi ho gayi toh add hi nahi karna
-10            if(i > 0 && side[i] == side[i-1]) continue;
+10            if(i > 0 && side[i] == side[i-1]) continue; // if side are same then add the matchsticks to one of them because if you add matchsticks in both then in the end they will generate same side array so just add in any one of them
 11            side[i] += matchsticks[idx];
 12            if(solution(matchsticks, idx+1, target, side)) return true;
 13            side[i] -= matchsticks[idx];
