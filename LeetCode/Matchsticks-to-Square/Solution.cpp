@@ -1,30 +1,33 @@
 1class Solution {
-2    bool dfs(vector<int>& matchsticks, vector<int>& temp, int index, int n, int target) {
-3        if (index >= n) {
-4            return (temp[0] == target && temp[1] == target &&
-5                    temp[2] == target && temp[3] == target);
-6        }
-7
-8        for (int i = 0; i < 4; i++) {
-9            if (temp[i] + matchsticks[index] > target) continue; // prune
-10            temp[i] += matchsticks[index];
-11            if (dfs(matchsticks, temp, index + 1, n, target)) return true;
-12            temp[i] -= matchsticks[index];
-13        }
-14        return false;
-15    }
-16
-17public:
-18    bool makesquare(vector<int>& matchsticks) {
-19        int sum = 0;
-20        for (int x : matchsticks) sum += x;
-21        if (sum % 4 != 0) return false;
-22
-23        int target = sum / 4;
-24        sort(matchsticks.rbegin(), matchsticks.rend()); // descending
-25
-26        vector<int> temp(4, 0);
-27        return dfs(matchsticks, temp, 0, matchsticks.size(), target);
-28    }
-29};
-30
+2    bool solution(vector<int>&matchsticks , int index , vector<int>&temp , int size){
+3        if(index < 0){
+4            for(int i = 0; i<3; i++){
+5                if(temp[i] != temp[i+1]){
+6                    return false;
+7                }
+8            }
+9            return true;
+10        }
+11
+12        for(int i = 0; i<4; i++){
+13            if(temp[i] + matchsticks[index] > size){
+14                continue;  // skip that element
+15            }
+16            if(i > 0 && temp[i] == temp[i-1]) continue; // optimization
+17            temp[i] += matchsticks[index];
+18            if(solution(matchsticks , index-1 , temp, size)) return true; // end tak aake agar square ban gaya toh bapash upar jane ki jarurat nahi hai islye return true kar do
+19            temp[i] -= matchsticks[index];
+20        }
+21        return false;
+22    }
+23public:
+24    bool makesquare(vector<int>& matchsticks) {
+25        int n = matchsticks.size();
+26        int sum = accumulate(matchsticks.begin() , matchsticks.end(), 0);
+27        if(sum %2 != 0){return false;}
+28        int stick_size = sum/4;
+29        sort(matchsticks.begin() , matchsticks.end());
+30        vector<int>temp(4 , 0);
+31        return solution(matchsticks , n-1, temp , stick_size);
+32    }
+33};
