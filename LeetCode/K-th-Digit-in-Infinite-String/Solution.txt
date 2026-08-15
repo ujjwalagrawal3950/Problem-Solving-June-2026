@@ -1,0 +1,56 @@
+1class Solution {
+2public:
+3    int kthDigit(long long k) {
+4        if (k <= 9) {
+5            return k;
+6        }
+7        k -= 9; // we are starting with b = 1;
+8
+9        long long b = 1;
+10        int digits = 2;
+11
+12        while (true) {
+13            long long x = 1;
+14            for (int i = 1; i < digits; i++)
+15                x *= 10;
+16            x--;
+17
+18            long long blocks = x - b + 1;
+19            long long total =
+20                blocks * 10LL *
+21                digits; // each block = 10 numbers * digits digits each
+22            if (k > total) {
+23                k -= total;
+24                b = x + 1;
+25                ++digits;
+26            } else
+27                break;
+28        }
+29
+30        // Now i get exact value of b
+31        long long number_of_digits_in_block = to_string(10 * b).size();
+32
+33        long long blockSize = 10LL * number_of_digits_in_block;
+34
+35        long long blockOffset = (k - 1) / blockSize;
+36
+37        b += blockOffset;
+38
+39        // Now k is relative to this exact block
+40        k = (k - 1) % blockSize + 1;
+41
+42        int pos = (k - 1) % number_of_digits_in_block;
+43
+44        long long idx = (k - 1) / number_of_digits_in_block;
+45
+46        long long num = 0;
+47        if (b % 2 == 0) {
+48            num = 10 * b + idx;
+49        } else {
+50            num = 10 * b + 9 - idx;
+51        }
+52        string ans = to_string(num);
+53        int res = ans[pos] - '0';
+54        return res;
+55    }
+56};
