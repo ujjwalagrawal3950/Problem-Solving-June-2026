@@ -2,17 +2,18 @@
 2public:
 3    int numSubseq(vector<int>& nums, int target) {
 4        sort(nums.begin(), nums.end());
-5        int mod = 1e9 + 7, ans = 0;
-6        int n = nums.size();
-7        vector<long long>power(n);
-8        power[0] = 1; for(int i = 1; i<n; i++){power[i] = (power[i-1]*2)%mod;}
-9
-10        for(int i = 0; i<n; i++){
-11            auto j = upper_bound(nums.begin(), nums.end(),target-nums[i])-nums.begin()-1;
-12            if(j>=i){
-13                ans = (ans + power[j-i])%mod;
+5        int n = nums.size(), mod = 1e9 + 7;
+6        vector<int>power(n);
+7        power[0] = 1; for(int i = 1; i<n; i++){power[i] = (power[i-1]*2)  % mod;}
+8
+9        int i = 0, j = n-1, ans = 0;
+10        while(i <= j){
+11            if(nums[i] + nums[j] <= target){
+12                ans = (ans + power[j-i]) % mod;
+13                i++; // valid subsequence must always in positive direction
 14            }
-15        }
-16        return ans;
-17    }
-18};
+15            else j--;
+16        }
+17        return ans;
+18    }
+19};
