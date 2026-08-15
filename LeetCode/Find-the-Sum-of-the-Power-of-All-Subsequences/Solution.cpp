@@ -7,7 +7,7 @@
 7        memset(dp, 0, sizeof(dp));
 8        dp[0][0] = 1;
 9        for(int i = 0; i<n; i++){  // Each element has two option pick or not pick
-10            for(int len = n; len >= 1; len--){
+10            for(int len = i+1; len >= 1; len--){
 11                for(int sum = k; sum >= nums[i]; sum--){
 12                    dp[len][sum] = (dp[len][sum]+ dp[len-1][sum-nums[i]]) % mod;
 13                }
