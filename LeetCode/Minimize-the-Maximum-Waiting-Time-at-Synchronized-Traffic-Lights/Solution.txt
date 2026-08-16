@@ -1,0 +1,16 @@
+1class Solution {
+2public:
+3    int minPenalty(int period, vector<int>& lights, vector<int>& arrivalTime) {
+4        int wait = 0;
+5        int n = lights.size();
+6        sort(lights.begin(), lights.end());
+7        for(int i = 0; i<arrivalTime.size(); i++){
+8            int x = arrivalTime[i] % period;
+9            auto it = upper_bound(lights.begin(), lights.end(), x);
+10            if(it == lights.end()){
+11                wait = max(wait, period - x);
+12            }
+13        }
+14        return wait;
+15    }
+16};
