@@ -1,0 +1,20 @@
+1class Solution {
+2public:
+3    int nearestDrone(vector<vector<int>>& drones, vector<int>& target) {
+4        int n = drones.size();
+5        int range = INT_MAX;
+6        int ans   = -1;
+7        for(int i = n-1; i>=0; i--){
+8            int x = abs(drones[i][0]-target[0]);
+9            int y = abs(drones[i][1] - target[1]);
+10
+11            if(x + y <= drones[i][2]){
+12                if(range >= x + y){
+13                    range = x + y;
+14                    ans = i;
+15                }
+16            }
+17        }
+18        return ans;
+19    }
+20};
