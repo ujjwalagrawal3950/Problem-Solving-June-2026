@@ -19,18 +19,15 @@
 19        queue<TreeNode*>q;  // Treenode and maximum depth
 20        q.push(root);
 21
-22        int level = 0;
-23        int maxDepth = -1;
-24        while(!q.empty()){
-25            int size = q.size();
-26            while(size--){
-27                TreeNode*node =  q.front(); q.pop();
-28                if(level > maxDepth){ans.push_back(node->val);  maxDepth = level;}
-29                if(node->right) q.push(node->right);
-30                if(node->left)  q.push(node->left);
-31            }
-32            level++;
-33        }
-34        return ans;
-35    }
-36};
+22        while(!q.empty()){
+23            int size = q.size();
+24            while(size--){
+25                TreeNode*node =  q.front(); q.pop();
+26                if(size == 0)  {ans.push_back(node->val);}
+27                if(node->left)  q.push(node->left);
+28                if(node->right) q.push(node->right);
+29            }
+30        }
+31        return ans;
+32    }
+33};
