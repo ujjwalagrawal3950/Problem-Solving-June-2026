@@ -8,20 +8,22 @@
 8 * };
 9 */
 10class Solution {
-11    TreeNode * LCA(TreeNode*root, int p, int q){
-12        if(root == nullptr){return nullptr;}
-13        if(root->val == p || root->val == q){return root;}
-14
-15        TreeNode*left = LCA(root->left, p, q);
-16        TreeNode*right = LCA(root->right, p, q);
-17
-18        if(left == nullptr){return right;}
-19        if(right == nullptr){return left;}
-20
-21        return root;
-22    }
-23public:
-24    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-25        return LCA(root, p->val, q->val);
-26    }
-27};
+11    TreeNode* dfs(TreeNode*root, int x, int y){
+12
+13        if(!root) return nullptr;
+14        if(root->val == x || root->val == y){return root;}
+15
+16        TreeNode* left = dfs(root->left, x, y);
+17        TreeNode*right = dfs(root->right, x, y);
+18        
+19        if(!left && right){return right;}
+20        else if(!right && left) return left;
+21        else if(!left && !right) return nullptr;
+22        return root;
+23    }
+24public:
+25    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+26        int x = p->val, y = q->val;
+27        return dfs(root, x, y);
+28    }
+29};
