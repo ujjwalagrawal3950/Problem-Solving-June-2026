@@ -28,3 +28,21 @@
 28        return ans;
 29    }
 30};
+31
+32                                // current element comes
+33                                //         ↓
+34                                // Can it collide with stack top?
+35                                //         ↓
+36                                //         YES
+37                                //         ↓
+38                                //      Compare them
+39                                //    ↙        ↓      ↘
+40                                // top dies  both die  current dies
+41                                //      ↓       ↓       ↓
+42                                //    pop      stop     stop
+43                                //     ↓
+44                                //  check again
+45                                //       ↓
+46                                // current survived?
+47                                //       ↓
+48                                //     push
