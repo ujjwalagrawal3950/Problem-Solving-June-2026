@@ -1,28 +1,27 @@
-// Definition for a binary tree node.
-public class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-    TreeNode() {}
-    TreeNode(int val) { this.val = val; }
-    TreeNode(int val, TreeNode left, TreeNode right) {
-        this.val = val;
-        this.left = left;
-        this.right = right;
-    }
-}
-
-class Solution {
-    public TreeNode sortedArrayToBST(int[] nums) {
-        return helper(nums, 0, nums.length - 1);
-    }
-
-    private TreeNode helper(int[] nums, int left, int right) {
-        if (left > right) return null;
-        int mid = (left + right) / 2;
-        TreeNode root = new TreeNode(nums[mid]);
-        root.left = helper(nums, left, mid - 1);
-        root.right = helper(nums, mid + 1, right);
-        return root;
-    }
-}
+1/**
+2 * Definition for a binary tree node.
+3 * struct TreeNode {
+4 *     int val;
+5 *     TreeNode *left;
+6 *     TreeNode *right;
+7 *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+8 *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+9 *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+10 * };
+11 */
+12class Solution {
+13    TreeNode * BST(vector<int>&nums, int left, int right){
+14        if(left > right){return nullptr;}
+15        int mid = left + (right - left)/2;
+16        TreeNode * node = new TreeNode(nums[mid]);
+17        node->left = BST(nums, left, mid-1);
+18        node->right = BST(nums, mid + 1, right);
+19
+20        return node;
+21
+22    }
+23public:
+24    TreeNode* sortedArrayToBST(vector<int>& nums) {
+25        return BST(nums, 0, nums.size()-1);
+26    }
+27};
