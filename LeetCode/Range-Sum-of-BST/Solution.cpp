@@ -10,18 +10,17 @@
 10 * };
 11 */
 12class Solution {
-13    void Summation(TreeNode*root, int low , int high, int & x){
-14        if(!root) return ;
-15        if(root->val >= low  && root->val <= high){
-16            x += root->val;
-17        }
-18        Summation(root->left , low, high, x);
-19        Summation(root->right, low, high, x);
-20    }
-21public:
-22    int rangeSumBST(TreeNode* root, int low, int high) {
-23        int sum = 0;
-24        Summation(root, low , high, sum);
-25        return sum;
-26    }
-27};
+13public:
+14    int rangeSumBST(TreeNode* root, int low, int high) {
+15        if(!root) return 0;
+16        if(root->val < low){
+17            return rangeSumBST(root->right, low, high);
+18        }
+19        if(root->val > high){
+20            return rangeSumBST(root->left, low, high);
+21        }
+22
+23        return root->val + rangeSumBST(root->left, low, high)
+24                + rangeSumBST(root->right, low , high);
+25    }
+26};
