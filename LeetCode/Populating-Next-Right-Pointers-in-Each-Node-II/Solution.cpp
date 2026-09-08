@@ -20,38 +20,32 @@
 20    Node*ConnectTree(Node*root){
 21        if(!root) return root; // we have to skip null nodes Here leaf node will not skips
 22
-23        if(root->left) root->left->next = root->right;
+23        if(root->left && root->right) root->left->next = root->right;
 24
-25        Node*temp = root->next;
-26
-27        while(temp){
-28            if(temp->left){
-29
-30                // Also Possible that root->right and root->left isn't exits so we have to check that as well
-31
-32                if(root->right) root->right->next = temp->left;
-33                else if(root->left) root->left->next = temp->left;
-34
-35                break;
-36            }
-37            if(temp->right){
-38
-39                if(root->right) root->right->next = temp->right;
-40                else if(root->left) root->left->next = temp->right;
+25        Node*child = (root->right) ? root->right : root->left;
+26        if(child){
+27        
+28            Node*temp = root->next;
+29            while(temp){
+30                if(temp->left){
+31                    child->next = temp->left;
+32                    break;
+33                }
+34                if(temp->right){
+35                    child->next = temp->right;
+36                    break; // We Found the next node so we just break the loop
+37                }
+38                temp = temp->next; // Go to the next side of current next tree
+39            }
+40        }
 41
-42                break; // We Found the next node so we just break the loop
-43            }
+42        ConnectTree(root->right);
+43        ConnectTree(root->left);
 44
-45            temp = temp->next; // Go to the next side of current next tree
-46        }
-47
-48        ConnectTree(root->right);
-49        ConnectTree(root->left);
-50
-51        return root;
-52    }
-53public:
-54    Node* connect(Node* root) {
-55        return ConnectTree(root);
-56    }
-57};
+45        return root;
+46    }
+47public:
+48    Node* connect(Node* root) {
+49        return ConnectTree(root);
+50    }
+51};
