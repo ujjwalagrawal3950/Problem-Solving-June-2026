@@ -10,20 +10,21 @@
 10 * };
 11 */
 12class Solution {
-13    TreeNode*insert(TreeNode*root, int value){
-14        
-15        if(!root) return new TreeNode(value);
-16
-17        if(root->val > value)
-18        {root->left   = insert(root->left, value);}
-19
-20        if(root->val < value)
-21        {root->right = insert(root->right, value);}
-22
-23        return root;
-24    }
-25public:
-26    TreeNode* insertIntoBST(TreeNode* root, int val) {
-27        return insert(root, val);
-28    }
-29};
+13public:
+14    TreeNode* insertIntoBST(TreeNode* root, int value) {
+15
+16        // Can we Do this with iterative method
+17        if(!root) return new TreeNode(value);
+18        
+19        TreeNode*temp = root;
+20        while(temp != nullptr){
+21            if(temp->val > value && temp->left)      {temp = temp->left;}
+22            else if(temp->val < value && temp->right) {temp = temp->right;}
+23            else break;
+24        }
+25        if(temp->val > value){temp->left = new TreeNode(value);}
+26        else temp->right = new TreeNode(value);
+27
+28        return root;
+29    }
+30};
