@@ -1,0 +1,21 @@
+1class Solution {
+2public:
+3    int minDays(int n) {
+4        vector<int> dp(n + 1, INT_MAX);
+5        dp[0] = 0;
+6
+7        for (int score = 1; score <= n; score++) {
+8            long long sum = 0;
+9
+10            for (int k = 1; ; k++) {
+11                sum = 1LL * k * (k + 1) / 2;
+12
+13                if (sum > score) break;
+14                // score != sum means skip day and we have to include that also
+15                dp[score] = 
+16                    min(dp[score], dp[score - sum] + k + (score != sum));
+17            }
+18        }
+19        return dp[n];
+20    }
+21};
