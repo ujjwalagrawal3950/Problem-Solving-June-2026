@@ -1,25 +1,21 @@
-class Solution {
-public:
-    void backtrack(string s, int i, int dots, string currIp, vector<string>& res) {
-        if (dots == 4 && i == s.length()) {
-            res.push_back(currIp.substr(0, currIp.length() - 1));
-            return;
-        }
-        if (dots > 4) 
-            return;
-
-        for (int j = i; j < min(i+3, (int)s.length()); j++) {
-            //the i==j check is used to determine if the current substring being considered as a part of the IP address is a single digit or not. If i is equal to j, it means that the current substring is a single digit. This check is used in conjunction with the check s[i] != '0' to ensure that the IP address being considered is a valid one, where each segment is between 0-255 and no leading zeroes are present.
-            if (stoi(s.substr(i, j-i+1)) < 256 && (i == j || s[i] != '0')) {
-                backtrack(s, j+1, dots+1, currIp + s.substr(i, j-i+1) + ".", res);
-            }
-        }
-    }
+    // c++  code
     vector<string> restoreIpAddresses(string s) {
-        vector<string> res;
-        if (s.length() > 12)
-            return res;
-        backtrack(s, 0, 0, "", res);
-        return res;
+        vector<string> ret;
+        string ans;
+        
+        for (int a=1; a<=3; a++)
+        for (int b=1; b<=3; b++)
+        for (int c=1; c<=3; c++)
+        for (int d=1; d<=3; d++)
+            if (a+b+c+d == s.length()) {
+                int A = stoi(s.substr(0, a));
+                int B = stoi(s.substr(a, b));
+                int C = stoi(s.substr(a+b, c));
+                int D = stoi(s.substr(a+b+c, d));
+                if (A<=255 && B<=255 && C<=255 && D<=255)
+                    if ( (ans=to_string(A)+"."+to_string(B)+"."+to_string(C)+"."+to_string(D)).length() == s.length()+3)
+                        ret.push_back(ans);
+            }    
+        
+        return ret;
     }
-};
